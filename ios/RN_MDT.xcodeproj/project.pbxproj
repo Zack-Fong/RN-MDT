@@ -145,7 +145,6 @@
 				41D99D3B7A150E5F5A68214F /* Pods-RN_MDT-RN_MDTTests.debug.xcconfig */,
 				296CAB50E8494418C3BF1BF9 /* Pods-RN_MDT-RN_MDTTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -485,6 +484,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZUU7LDLHZ5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RN_MDT/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -511,6 +511,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZUU7LDLHZ5;
 				INFOPLIST_FILE = RN_MDT/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
