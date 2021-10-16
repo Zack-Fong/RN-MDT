@@ -1,10 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { TIMEOUT_MILLISECONDS } from './constants';
+
 export function getRequest(url, header, parameters) {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    setTimeout(() => abortController.abort(), TIMEOUT_MILLISECONDS);
+
     let options = {
         method: 'GET',
         headers: header,
-        body: JSON.stringify(parameters)
+        body: JSON.stringify(parameters),
+        signal: signal
     };
 
     if (header === null) {
@@ -29,10 +37,16 @@ export function getRequest(url, header, parameters) {
 }
 
 export function postRequest(url, header, parameters, uploadFile) {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    setTimeout(() => abortController.abort(), TIMEOUT_MILLISECONDS);
+
     let options = {
         method: 'POST',
         headers: header,
-        body: uploadFile ? parameters : JSON.stringify(parameters)
+        body: uploadFile ? parameters : JSON.stringify(parameters),
+        signal: signal
     };
 
     if (header === null) {
@@ -56,15 +70,17 @@ export function postRequest(url, header, parameters, uploadFile) {
     });
 }
 
-export function getStandardHeader(token) {
+export async function getStandardHeader() {
+    let token = await retrieveAsyncStorageData("token");
+
     let header = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': token
     };
 
-    if (isStringEmpty(token)) {
-        delete header.Authorization;
+    if (!isStringEmpty(token)) {
+        header.Authorization = token;
     }
 
     return header;

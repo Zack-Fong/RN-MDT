@@ -1,3 +1,5 @@
+import { API_PATHS } from "../common/constants";
+
 // Local Host Environment
 const CONFIG_IP_LOCAL_HOST = 'http://localhost';
 const BASE_API_URL_LOCAL_HOST = CONFIG_IP_LOCAL_HOST + ":8080";
@@ -5,9 +7,9 @@ const BASE_API_URL_LOCAL_HOST = CONFIG_IP_LOCAL_HOST + ":8080";
 // Note to all developers: Change here only
 const BASE_API_URL = BASE_API_URL_LOCAL_HOST;
 
-const AUTHENTICATE_API_URL = BASE_API_URL + "/authenticate";
-const ACCOUNT_API_URL = BASE_API_URL + "/account";
-const TRANSFER_API_URL = BASE_API_URL + "/transfer";
+const AUTHENTICATE_API_URL = BASE_API_URL + API_PATHS.AUTHENTICATE.BASE;
+const ACCOUNT_API_URL = BASE_API_URL + API_PATHS.ACCOUNT.BASE;
+const TRANSFER_API_URL = BASE_API_URL + API_PATHS.TRANSFER.BASE;
 
 export { BASE_API_URL };
 
