@@ -21,11 +21,13 @@ class TextInputComponent extends React.PureComponent {
                     borderBottomWidth: 2,
                     fontSize: 15
                 }}
+                autoCorrect={false}
                 textContentType={"none"}
                 underlineColorAndroid={"transparent"}
                 placeholder={this.props.placeholder}
                 placeholderTextColor={COLORS.LIGHT_GRAY}
                 autoCapitalize={"none"}
+                secureTextEntry={this.props.secureTextEntry}
                 onChangeText={(text) => {
                     this.setState({
                         text

@@ -1,23 +1,16 @@
 export const TIMEOUT_MILLISECONDS = 30000;  //30 seconds
 
-export const KEYS_SAVED_IN_SESSION_STORAGE = {
+export const KEYS_SAVED_IN_ASYNC_STORAGE = {
     AUTHORIZATION_TOKEN: 'authorizationToken',
-    LANGUAGE: 'language',
-    REMEMBER_ME: 'remember-me',
-    MENU_NAME: 'menuName',
-    AAS_USER_ID: "aasUserId",
-    AAS_TENANT_USER_ID: "aasTenantUserId",
-    USER_PROFILE: "userProfile",
-    USER_PROFILE_IMAGE: "userProfileImage",
-    USER_PROFILE_FIRST_NAME: "userProfileFirstName",
-    TENANT_ID: "tenantId",
-    TENANT_PROFILE: "tenantProfile",
-    TENANT_TIMEZONE: 'tenantTimezone',
-    COMPANY_LOGO: "companyLogo",
-    LAYOUT_FIRST_LOAD: "layoutFirstLoad",
-    USERNAME: 'username',
-    COUNTRY: 'country'
 };
+
+export const API_STATUS_CODES = {
+    SUCCESSFUL_CODE: [200, 201],
+    BAD_REQUEST: [400],
+    UNAUTHORIZED_CODE: [401],
+    FORBIDDEN_CODE: [403],
+    NOT_FOUND_CODE: [404]
+}
 
 export const API_PATHS = {
     AUTHENTICATE: {
@@ -40,6 +33,8 @@ export const TEXT_CONSTANTS = {
     USERNAME: 'username',
     PASSWORD: 'password',
     LOGIN: 'login',
+    EMPTY_USERNAME_ERROR: 'Username cannot be empty',
+    EMPTY_PASSWORD_ERROR: 'Password cannot be empty',
 
     //Dashboard Screen
     LOGOUT: 'log out',

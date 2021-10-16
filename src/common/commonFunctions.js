@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { TIMEOUT_MILLISECONDS } from './constants';
+import { TIMEOUT_MILLISECONDS, API_STATUS_CODES } from './constants';
 
 export function getRequest(url, header, parameters) {
     const abortController = new AbortController();
@@ -75,8 +75,7 @@ export async function getStandardHeader() {
 
     let header = {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': token
+        'Accept': 'application/json'
     };
 
     if (!isStringEmpty(token)) {
@@ -88,6 +87,10 @@ export async function getStandardHeader() {
 
 export function convertObjectToQueryString(object) {
     return Object.keys(object).map(key => key + '=' + encodeURIComponent(object[key])).join('&');
+}
+
+export function isSuccessApiCall(httpStatusCode) {
+    return API_STATUS_CODES.SUCCESSFUL_CODE.includes(httpStatusCode);
 }
 
 export function promiseAllSettled(promises) {
@@ -230,7 +233,12 @@ export async function retrieveAsyncStorageData(key) {
 
 export async function deleteAsyncStorageData(key) {
     try {
-        await AsyncStorage.removeItem(key);
+        if (!isStringEmpty(key)) {
+            await AsyncStorage.removeItem(key);
+        } else {
+            let keys = await AsyncStorage.getAllKeys();
+            await AsyncStorage.multiRemove(keys);
+        }
         return true;
     } catch (error) {
         return false;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, SafeAreaView, Text, ScrollView } from 'react-native';
 
-import { TEXT_CONSTANTS } from '../../common/constants';
-import { capitalizeString } from '../../common/commonFunctions';
+
+import { TEXT_CONSTANTS, KEYS_SAVED_IN_ASYNC_STORAGE } from '../../common/constants';
+import { capitalizeString, retrieveAsyncStorageData, deleteAsyncStorageData } from '../../common/commonFunctions';
 import { COLORS } from '../../common/colors';
 
 import ButtonComponent from '../../components/Button';
@@ -18,6 +19,12 @@ class DashboardScreen extends React.PureComponent {
         }
     }
 
+    componentDidMount() {
+        retrieveAsyncStorageData(KEYS_SAVED_IN_ASYNC_STORAGE.AUTHORIZATION_TOKEN).then((token) => {
+            console.log("token: ", token);
+        })
+    }
+
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -28,7 +35,13 @@ class DashboardScreen extends React.PureComponent {
                 <View style={{ alignSelf: 'flex-end', width: '30%' }}>
                     <ButtonComponent
                         onPressButton={() => {
-                            this.props.navigation.goBack();
+                            deleteAsyncStorageData()
+                                .then(() => {
+                                    this.props.navigation.reset({
+                                        index: 0,
+                                        routes: [{ name: 'LoginScreen' }]
+                                    })
+                                })
                         }}
                         name={capitalizeString(TEXT_CONSTANTS.LOGOUT)}
                     />
