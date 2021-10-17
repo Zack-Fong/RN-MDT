@@ -70,7 +70,7 @@ class LoginScreen extends React.Component {
                     this.setState({ isLoading: false })
                 }).catch(loginError => {
                     Alert.alert(
-                        "Oops!",
+                        TEXT_CONSTANTS.OOPS,
                         loginError,
                         [
                             {

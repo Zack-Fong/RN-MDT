@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView, Text, Image, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
@@ -135,9 +135,21 @@ class TransferScreen extends React.PureComponent {
             initiateTransfer(this.state.recipient, Number(this.state.amount), moment(this.state.dateOfTransfer).format(), this.state.description)
                 .then((initiateTransferResult) => {
                     console.log("initiateTransferResult: ", initiateTransferResult);
-
-                    this.setState({ isLoading: false });
-                    this.props.navigation.goBack();
+                    Alert.alert(
+                        TEXT_CONSTANTS.SUCCESS,
+                        TEXT_CONSTANTS.SUCCESS_TRANSACTION_ADDED,
+                        [
+                            {
+                                text: "Ok",
+                                onPress: () => {
+                                    this.setState({
+                                        isLoading: false
+                                    })
+                                    this.props.navigation.goBack();
+                                },
+                                style: "cancel",
+                            },
+                        ])
                 }).catch((initiateTransferError) => {
                     this.setState({ isLoading: false });
                     console.log("initiateTransferError: ", initiateTransferError);

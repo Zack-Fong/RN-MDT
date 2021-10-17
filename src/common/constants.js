@@ -32,6 +32,11 @@ export const API_PATHS = {
 }
 
 export const TEXT_CONSTANTS = {
+    SUCCESS: "Success",
+    OOPS: "Oops",
+
+    SUCCESS_TRANSACTION_ADDED: "Transaction has been added successfully",
+
     //Login Screen
     USERNAME: 'username',
     PASSWORD: 'password',
