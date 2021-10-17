@@ -11,3 +11,36 @@
 **Run in iOS Emulator/Device**
 1. cd ios && pod install
 2. open XCode, select deive/simulator and run project
+
+**Code Structure**
+**1. screens folder**
+- Contains 3 screens:
+  1. LoginScreen (Landing Screen)
+  2. DashboardScreen
+  3. TransferScreen
+- Screen Flow:
+  LoginScreen -> (upon press Login) -> DashboardScreen -> (upon press Transfer) -> Transfer Screen -> (upon press Cancel/Submit) -> Dashboard Screen -> (upon press Log Out) -> Remove token from AsyncStorage and redirect to Login Screen
+- DashboardScreen -> pull down to refresh
+
+**2. navigators folder**
+- Organize Login, Dashobard & Transfer Screen into a Stack to be displayed in the App
+
+**3. components folder**
+- All reusuable components will be stored in this folder
+- Purpose: Standardise reusuable UI components
+- Examples:
+  1. ActivityIndicatorOverlay: Shown to user when the screen is loading
+  2. Button: A reusable button component which only the name, press function, flex and color varies
+  3. TextInput: A reusable TextInput component which only the placeholder, onChangeTextFunction, secureTextEndtry and keyboard type varies
+  4. Transaction: A resusable component that displays the transactional details in DaashboardScreen
+  5. ErrorMessage: A resuable component to display error messages
+ 
+**4. common folder**
+ - color hex codes, constants and reusauble functions will be stored in this folder
+
+**5. assests folder**
+- contains images/icons resource file
+
+**6. api folder**
+- conatins all the functions that make the api calls
+- conatins the api configuration file that contains base url etc.
