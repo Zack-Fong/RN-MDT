@@ -89,10 +89,6 @@ export function isSuccessApiCall(httpStatusCode) {
     return API_STATUS_CODES.SUCCESSFUL_CODE.includes(httpStatusCode);
 }
 
-export function isNumber(number) {
-    return (Number.isFinite(number));
-}
-
 export function isJsonString(str) {
     if (isStringEmpty(str)) {
         return false;
@@ -113,14 +109,6 @@ export function isArray(array) {
     return Array.isArray(array);
 }
 
-export function isObject(object) {
-    return (typeof object === 'object');
-}
-
-export function isVariableDefined(variable) {
-    return typeof variable !== 'undefined' && variable !== null;
-}
-
 export function isNumberEmpty(number) {
     return (typeof number === "undefined" || number === null || number === '' || isNaN(Number(number)));
 }
@@ -130,11 +118,11 @@ export function isStringEmpty(string) {
 }
 
 export function isArrayEmpty(array) {
-    return (typeof array === 'undefined' || array === null || array.length === 0);
+    return (typeof array === 'undefined' || !isArray(array) || array === null || array.length === 0);
 }
 
 export function isObjectEmpty(object) {
-    return (typeof object === 'undefined' || object === null || (Object.entries(object).length === 0 && object.constructor === Object));
+    return (typeof object !== 'object' || object === null || isArray(object) || (Object.entries(object).length === 0 && object.constructor === Object));
 }
 
 export function isEqual(element1, element2) {
@@ -153,7 +141,7 @@ export function capitalizeString(string) {
 }
 
 export function formatNumberIntoMoney(number) {
-    return ((number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+    return (isNumberEmpty(number) ? "" : (number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 }
 
 export async function setAsyncStorageData(key, value) {
