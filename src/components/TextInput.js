@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { COLORS } from '../../common/colors';
+
+import { COLORS } from '../common/colors';
 
 class TextInputComponent extends React.PureComponent {
     constructor(props) {
@@ -28,13 +29,13 @@ class TextInputComponent extends React.PureComponent {
                 placeholderTextColor={COLORS.LIGHT_GRAY}
                 autoCapitalize={"none"}
                 secureTextEntry={this.props.secureTextEntry}
+                keyboardType={this.props.decimalKeyboard ? 'decimal-pad' : 'default'}
+                returnKeyType={this.props.decimalKeyboard ? 'done' : 'default'}
                 onChangeText={(text) => {
                     this.setState({
                         text
                     })
-                }}
-                onBlur={() => {
-                    this.props.onBlurTextInput(this.state.text);
+                    this.props.onChangeText && this.props.onChangeText(text);
                 }}
             />
         )

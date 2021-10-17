@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { COLORS } from '../common/colors';
 
-class Line extends React.Component {
+class Line extends React.PureComponent {
     constructor(props) {
         super(props);
     }

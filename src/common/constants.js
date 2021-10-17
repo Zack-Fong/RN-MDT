@@ -1,4 +1,7 @@
 export const TIMEOUT_MILLISECONDS = 30000;  //30 seconds
+export const INTERVAL_MILLISECONDS = {
+    CHECK_PROMISES_DONE: 200
+}
 
 export const KEYS_SAVED_IN_ASYNC_STORAGE = {
     AUTHORIZATION_TOKEN: 'authorizationToken',
@@ -40,6 +43,8 @@ export const TEXT_CONSTANTS = {
     LOGOUT: 'log out',
     YOUR_ACTIVITY: 'your activity',
     MAKE_A_TRANSFER: 'make a transfer',
+    TRANSFER_TO: 'Transfer to',
+    RECEIVED_FROM: 'Received from',
 
     //Transfer Screen,
     RECIPIENT: 'recipient',
@@ -47,6 +52,11 @@ export const TEXT_CONSTANTS = {
     DESCRIPTION: 'description',
     AMOUNT: 'amount',
     CANCEL: 'cancel',
-    SUBMIT: 'submit'
+    SUBMIT: 'submit',
+
+    EMPTY_RECIPIENT_ERROR: 'Recipient cannot be empty',
+    EMPTY_DATE_OF_TRANSFER_ERROR: 'Date of transfer cannot be empty',
+    EMPTY_DESCRIPTION_ERROR: 'Description cannot be empty',
+    EMPTY_AMOUNT_ERROR: 'Amount cannot be empty'
 }
 

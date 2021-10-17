@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { TIMEOUT_MILLISECONDS, API_STATUS_CODES } from './constants';
+import { TIMEOUT_MILLISECONDS, API_STATUS_CODES, KEYS_SAVED_IN_ASYNC_STORAGE } from './constants';
 
 export function getRequest(url, header, parameters) {
     const abortController = new AbortController();
@@ -71,7 +71,7 @@ export function postRequest(url, header, parameters, uploadFile) {
 }
 
 export async function getStandardHeader() {
-    let token = await retrieveAsyncStorageData("token");
+    let token = await retrieveAsyncStorageData(KEYS_SAVED_IN_ASYNC_STORAGE.AUTHORIZATION_TOKEN);
 
     let header = {
         'Content-Type': 'application/json',
@@ -85,39 +85,12 @@ export async function getStandardHeader() {
     return header;
 }
 
-export function convertObjectToQueryString(object) {
-    return Object.keys(object).map(key => key + '=' + encodeURIComponent(object[key])).join('&');
-}
-
 export function isSuccessApiCall(httpStatusCode) {
     return API_STATUS_CODES.SUCCESSFUL_CODE.includes(httpStatusCode);
 }
 
-export function promiseAllSettled(promises) {
-    let mappedPromises = promises.map((p) => {
-        return p
-            .then((value) => {
-                return {
-                    status: 'fulfilled',
-                    value,
-                };
-            })
-            .catch((reason) => {
-                return {
-                    status: 'rejected',
-                    reason,
-                };
-            });
-    });
-    return Promise.all(mappedPromises);
-};
-
 export function isNumber(number) {
     return (Number.isFinite(number));
-}
-
-export function isString(string) {
-    return (typeof string === 'string');
 }
 
 export function isJsonString(str) {
@@ -168,26 +141,6 @@ export function isEqual(element1, element2) {
     return (element1 === element2);
 }
 
-export function getFormDataFromObject(object) {
-    let formData = new FormData();
-    Object.keys(object).forEach(key => formData.append(key, object[key]));
-
-    return formData;
-}
-
-export function shadowCopyObject(obj) {
-    return Object.assign({}, obj);
-}
-
-export function deepCopyObject(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
-
-export function validateEmail(email) {
-    let regularExpression = /^([A-Za-z0-9_\-\.])+\@(?!(?:[A-Za-z0-9_\-\.]+\.)?([A-Za-z]{2,4})\.\2)([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    return regularExpression.test(email);
-}
-
 export function capitalizeString(string) {
     var splitStr = string.toLowerCase().split(' ');
     for (var i = 0; i < splitStr.length; i++) {
@@ -199,12 +152,8 @@ export function capitalizeString(string) {
     return splitStr.join(' ');
 }
 
-export function uppercaseString(string) {
-    return string.toUpperCase();
-}
-
-export function lowercaseString(string) {
-    return string.toLowerCase();
+export function formatNumberIntoMoney(number) {
+    return ((number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
 }
 
 export async function setAsyncStorageData(key, value) {

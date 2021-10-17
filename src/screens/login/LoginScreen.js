@@ -6,8 +6,9 @@ import { COLORS } from '../../common/colors';
 import { TEXT_CONSTANTS } from '../../common/constants';
 
 import ActivityIndicatorOverlay from '../../components/ActivityIndicatorOverlay';
-import TextInputComponent from '../../components/input/TextInput';
+import TextInputComponent from '../../components/TextInput';
 import ButtonComponent from '../../components/Button';
+import ErrorMessage from '../../components/ErrorMesage';
 
 import { login } from '../../api/authenticate/authenticateServices';
 
@@ -26,10 +27,6 @@ class LoginScreen extends React.Component {
         }
     }
 
-    componentDidMount() {
-
-    }
-
     onUsernameTextChange = (username) => {
         this.setState({
             username: username,
@@ -45,34 +42,32 @@ class LoginScreen extends React.Component {
     }
 
     validate = () => {
+        let errorsPresent = isStringEmpty(this.state.username) || isStringEmpty(this.state.password)
         this.setState({
+            isLoading: errorsPresent ? false : true,
+
             emptyUsername: isStringEmpty(this.state.username),
             emptyPassword: isStringEmpty(this.state.password)
         })
 
-        return (isStringEmpty(this.state.username) || isStringEmpty(this.state.password));
+        return (errorsPresent);
     }
 
     onPressLoginButton = () => {
         Keyboard.dismiss();
+
         this.setState({
             isLoading: true
         }, () => {
             let validationResult = this.validate();
             if (validationResult) {
-                this.setState({
-                    isLoading: false
-                })
                 return;
             }
 
             login(this.state.username, this.state.password)
                 .then(() => {
-                    this.setState({
-                        isLoading: false
-                    }, () => {
-                        this.props.navigation.navigate("DashboardScreen");
-                    })
+                    this.props.navigation.navigate("DashboardScreen");
+                    this.setState({ isLoading: false })
                 }).catch(loginError => {
                     Alert.alert(
                         "Oops!",
@@ -105,22 +100,20 @@ class LoginScreen extends React.Component {
 
                         <TextInputComponent
                             placeholder={capitalizeString(TEXT_CONSTANTS.USERNAME)}
-                            onBlurTextInput={this.onUsernameTextChange}
+                            onChangeText={this.onUsernameTextChange}
                         />
                         {this.state.emptyUsername ?
-                            <Text style={{ color: COLORS.RED, marginTop: -15, marginLeft: 15, fontSize: 10 }}>
-                                {TEXT_CONSTANTS.EMPTY_USERNAME_ERROR}
-                            </Text> : null}
+                            <ErrorMessage
+                                type={TEXT_CONSTANTS.USERNAME} /> : null}
 
                         <TextInputComponent
                             secureTextEntry
                             placeholder={capitalizeString(TEXT_CONSTANTS.PASSWORD)}
-                            onBlurTextInput={this.onPasswordTextChange}
+                            onChangeText={this.onPasswordTextChange}
                         />
                         {this.state.emptyPassword ?
-                            <Text style={{ color: COLORS.RED, marginTop: -15, marginLeft: 15, fontSize: 10 }}>
-                                {TEXT_CONSTANTS.EMPTY_PASSWORD_ERROR}
-                            </Text> : null}
+                            <ErrorMessage
+                                type={TEXT_CONSTANTS.PASSWORD} /> : null}
 
                         <ButtonComponent
                             borderColor={COLORS.GREEN}

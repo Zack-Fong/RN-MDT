@@ -1,28 +1,122 @@
 import React from 'react';
-import { View, SafeAreaView, Text, ScrollView } from 'react-native';
+import { View, SafeAreaView, Text, FlatList, RefreshControl } from 'react-native';
 
-
-import { TEXT_CONSTANTS, KEYS_SAVED_IN_ASYNC_STORAGE } from '../../common/constants';
-import { capitalizeString, retrieveAsyncStorageData, deleteAsyncStorageData } from '../../common/commonFunctions';
+import { TEXT_CONSTANTS, INTERVAL_MILLISECONDS } from '../../common/constants';
+import { capitalizeString, deleteAsyncStorageData, isNumberEmpty, isArrayEmpty, formatNumberIntoMoney } from '../../common/commonFunctions';
 import { COLORS } from '../../common/colors';
 
 import ButtonComponent from '../../components/Button';
 import ActivityIndicatorOverlay from '../../components/ActivityIndicatorOverlay';
 import Line from '../../components/Line';
+import Transaction from '../../components/Transaction';
+
+import { retrieveBalances, retrieveTransactions } from '../../api/account/accountServices';
 
 class DashboardScreen extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            isLoading: false
+            isLoading: false,
+            isRefreshing: false,
+
+            balance: 0,
+            transactions: []
         }
+
+        this.apiCallsInProgress = 0;
     }
 
     componentDidMount() {
-        retrieveAsyncStorageData(KEYS_SAVED_IN_ASYNC_STORAGE.AUTHORIZATION_TOKEN).then((token) => {
-            console.log("token: ", token);
+        this.focusListener = this.props.navigation.addListener("focus", () => {
+            // The screen is focused
+            // Call any action
+            this.retrieveBalancesAndTransactions();
+        });
+    }
+
+    componentWillUnmount() {
+        if (this.focusListener) {
+            this.focusListener();
+        }
+    }
+
+    retrieveBalancesAndTransactions = () => {
+        this.setState({
+            isLoading: true
+        }, () => {
+            let balance = 0;
+            let transactions = [];
+
+            this.apiCallsInProgress += 1;
+            retrieveBalances()
+                .then((retrievedBalances) => {
+                    this.apiCallsInProgress -= 1;
+                    if (!isNumberEmpty(retrievedBalances)) {
+                        balance = formatNumberIntoMoney(Number(retrievedBalances));
+                    }
+                }).catch((retrieveBalancesError) => {
+                    console.log("retrieveBalancesError: ", retrieveBalancesError);
+                    this.apiCallsInProgress -= 1;
+                })
+
+            this.apiCallsInProgress += 1;
+            retrieveTransactions()
+                .then((retrievedTransactions) => {
+                    this.apiCallsInProgress -= 1;
+
+                    if (!isArrayEmpty(retrievedTransactions)) {
+                        transactions = retrievedTransactions;
+                    }
+                }).catch((retrieveTransactionsError) => {
+                    console.log("retrieveTransactionsError: ", retrieveTransactionsError);
+                    this.apiCallsInProgress -= 1;
+                })
+
+            let interval = setInterval(() => {
+                if (this.apiCallsInProgress < 1) {
+                    clearInterval(interval);
+
+                    this.setState({
+                        isLoading: false,
+
+                        transactions,
+                        balance
+                    })
+                }
+            }, INTERVAL_MILLISECONDS.CHECK_PROMISES_DONE);
         })
+    }
+
+    handleRefresh = () => {
+        this.setState({
+            isRefreshing: true
+        }, () => {
+            this.retrieveBalancesAndTransactions();
+            this.setState({ isRefreshing: false });
+        });
+    }
+
+    onPressLogoutButton = () => {
+        deleteAsyncStorageData()
+            .then(() => {
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'LoginScreen' }]
+                })
+            })
+    }
+
+    onPressMakeATransfer = () => {
+        this.props.navigation.navigate("TransferScreen");
+    }
+
+    renderTransactions = ({ item }) => {
+        return (
+            <Transaction
+                transaction={item}
+            />
+        )
     }
 
     render() {
@@ -32,17 +126,9 @@ class DashboardScreen extends React.PureComponent {
                     isShow={this.state.isLoading}
                 />
 
-                <View style={{ alignSelf: 'flex-end', width: '30%' }}>
+                <View style={{ alignSelf: 'flex-end', flex: 1 }}>
                     <ButtonComponent
-                        onPressButton={() => {
-                            deleteAsyncStorageData()
-                                .then(() => {
-                                    this.props.navigation.reset({
-                                        index: 0,
-                                        routes: [{ name: 'LoginScreen' }]
-                                    })
-                                })
-                        }}
+                        onPressButton={this.onPressLogoutButton}
                         name={capitalizeString(TEXT_CONSTANTS.LOGOUT)}
                     />
                 </View>
@@ -57,7 +143,7 @@ class DashboardScreen extends React.PureComponent {
                         You have
                     </Text>
                     <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                        {`\n\nSGD ${10000}\n\n`}
+                        {`\n\nSGD ${this.state.balance}\n\n`}
                     </Text>
                     <Text style={{ fontWeight: '500' }}>
                         in your account
@@ -75,12 +161,24 @@ class DashboardScreen extends React.PureComponent {
                     {capitalizeString(TEXT_CONSTANTS.YOUR_ACTIVITY)}
                 </Text>
 
-                <ScrollView />
+                <FlatList
+                    data={this.state.transactions}
+                    renderItem={this.renderTransactions}
+                    keyExtractor={item => item.id}
+                    refreshControl={
+                        <RefreshControl
+                            onRefresh={() => {
+                                this.handleRefresh()
+                            }}
+                            refreshing={this.state.isRefreshing}
+                            enabled={true}
+                            title={"Release to refresh"}
+                        />
+                    }
+                />
 
                 <ButtonComponent
-                    onPressButton={() => {
-                        this.props.navigation.navigate("TransferScreen");
-                    }}
+                    onPressButton={this.onPressMakeATransfer}
                     borderColor={COLORS.BLUE}
                     textColor={COLORS.BLUE}
                     name={capitalizeString(TEXT_CONSTANTS.MAKE_A_TRANSFER)}
