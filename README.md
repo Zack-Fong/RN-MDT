@@ -12,7 +12,8 @@
 1. cd ios && pod install
 2. open XCode, select deive/simulator and run project
 
-**Steps for API connection via own machine's IP Address**
+**Steps To Update CONFIG_IP_LOCAL_HOST To Own Machine's IP Address**
+- This step is needed for API Connection to work
 1. Go to configuration.js file
     - Path: ~/RN-MDT/src/api/configuration.js 
 2. Replace CONFIG_IP_LOCAL_HOST with your own machine's IP Address
