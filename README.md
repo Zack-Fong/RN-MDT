@@ -7,25 +7,25 @@
 
 **Run in Android Emulator/Device**
 1. react-native run-android
+2. Open another Terminal/Command Prompt and cd {RN_MDT} folder
+3. Run command: adb reverse tcp:8080 tcp:8080
 
 **Run in iOS Emulator/Device**
 1. cd ios && pod install
-2. open XCode, select deive/simulator and run project
+2. open XCode, select device/simulator and run project
 
-**Steps To Update CONFIG_IP_LOCAL_HOST To Own Machine's IP Address**
-- This step is needed for API Connection to work
+**Steps to use Own Machine's IP Address instead of localhost**
 1. Go to configuration.js file
     - Path: ~/RN-MDT/src/api/configuration.js 
 2. Replace CONFIG_IP_LOCAL_HOST with your own machine's IP Address
     - E.g. const CONFIG_IP_LOCAL_HOST = {own machine's IP Address};
-
-**Step to find Macbook's IP Address**
-- System Preferences -> Network -> Wi-Fi -> Status -> Will Show the IP Address
-
-**Step to find Windows's IP Address**
-1. Open Command Prompt
-2. Type **ipconfig/all** and press **Enter**
-3. **IP Address** will be shown as **IPv4 Address**
+    - 
+- **Step to find Macbook's IP Address**
+    - System Preferences -> Network -> Wi-Fi -> Status -> Will Show the IP Address
+- **Step to find Windows's IP Address**
+    1. Open Command Prompt
+    2. Type **ipconfig/all** and press **Enter**
+    3. **IP Address** will be shown as **IPv4 Address**
 
 **Code Structure**
 **1. screens folder**
