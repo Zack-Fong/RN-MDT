@@ -15,6 +15,7 @@
 2. open XCode, select device/simulator and run project
 
 **Steps to use Own Machine's IP Address instead of localhost**
+Own Machine's IP Address is needed for API to work in real devices
 1. Go to configuration.js file
     - Path: ~/RN-MDT/src/api/configuration.js 
 2. Replace CONFIG_IP_LOCAL_HOST with your own machine's IP Address
@@ -28,7 +29,7 @@
     3. **IP Address** will be shown as **IPv4 Address**
 
 **Code Structure**
-/n**1. screens folder**
+/**1. screens folder**
 - Contains 3 screens:
   1. LoginScreen (Landing Screen)
   2. DashboardScreen
