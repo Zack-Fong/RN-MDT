@@ -8,7 +8,7 @@
 **Run in Android Emulator/Device**
 1. react-native run-android
 2. Open another Terminal/Command Prompt and cd {RN_MDT} folder
-3. Run command: adb reverse tcp:8080 tcp:8080
+3. Run command: **adb reverse tcp:8080 tcp:8080**
 
 **Run in iOS Emulator/Device**
 1. cd ios && pod install
