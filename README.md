@@ -14,13 +14,12 @@
 1. cd ios && pod install
 2. open XCode, select device/simulator and run project
 
-**Steps to use Own Machine's IP Address instead of localhost** <br />
-Own Machine's IP Address is needed for API to work in real devices
+**Own Machine's IP Address is needed for API to work in real devices**
+**Steps to use Own Machine's IP Address instead of localhost**
 1. Go to configuration.js file
     - Path: ~/RN-MDT/src/api/configuration.js 
 2. Replace CONFIG_IP_LOCAL_HOST with your own machine's IP Address
     - E.g. const CONFIG_IP_LOCAL_HOST = {own machine's IP Address};
-    - 
 - **Step to find Macbook's IP Address**
     - System Preferences -> Network -> Wi-Fi -> Status -> Will Show the IP Address
 - **Step to find Windows's IP Address**
