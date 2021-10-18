@@ -20,12 +20,10 @@ export async function retrieveBalances() {
             else {
                 response.json().then((data) => {
                     reject(data.description);
-                }).catch(error => {
-                    reject(error);
                 })
             }
         }).catch(error => {
-            reject(error);
+            reject(error ? JSON.stringify(error) : "");
         })
     })
 }
@@ -47,12 +45,10 @@ export async function retrieveTransactions() {
             else {
                 response.json().then((data) => {
                     reject(data.description);
-                }).catch(error => {
-                    reject(error);
                 })
             }
         }).catch(error => {
-            reject(error);
+            reject(error ? JSON.stringify(error) : "");
         })
     })
 }
@@ -74,12 +70,10 @@ export async function retrievePayees() {
             else {
                 response.json().then((data) => {
                     reject(data.description);
-                }).catch(error => {
-                    reject(error);
                 })
             }
         }).catch(error => {
-            reject(error);
+            reject(error ? JSON.stringify(error) : "");
         })
     })
 }

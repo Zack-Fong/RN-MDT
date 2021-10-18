@@ -24,12 +24,10 @@ export async function initiateTransfer(recipient, amount, date, description) {
             else {
                 response.json().then((data) => {
                     reject(data.description);
-                }).catch(error => {
-                    reject(error);
                 })
             }
         }).catch(error => {
-            reject(error);
+            reject(error ? JSON.stringify(error) : "");
         })
     })
 }

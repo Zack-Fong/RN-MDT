@@ -21,8 +21,6 @@ export async function login(username, password) {
                     setAsyncStorageData(KEYS_SAVED_IN_ASYNC_STORAGE.AUTHORIZATION_TOKEN, data.token)
                         .then(() => {
                             resolve();
-                        }).catch(error => {
-                            reject(error);
                         })
                 })
             }
@@ -32,7 +30,7 @@ export async function login(username, password) {
                 })
             }
         }).catch(error => {
-            reject(error);
+            reject(error ? JSON.stringify(error) : "");
         })
     })
 }
