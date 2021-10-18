@@ -1,7 +1,7 @@
 import { API_PATHS } from "../common/constants";
 
 // Local Host Environment
-const CONFIG_IP_LOCAL_HOST = 'http://192.168.1.12';
+const CONFIG_IP_LOCAL_HOST = 'http://127.0.0.1';
 const BASE_API_URL_LOCAL_HOST = CONFIG_IP_LOCAL_HOST + ":8080";
 
 // Note to all developers: Change here only
