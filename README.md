@@ -28,7 +28,7 @@
     3. **IP Address** will be shown as **IPv4 Address**
 
 **Code Structure**
-**1. screens folder**
+/n**1. screens folder**
 - Contains 3 screens:
   1. LoginScreen (Landing Screen)
   2. DashboardScreen
