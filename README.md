@@ -14,7 +14,7 @@
 1. cd ios && pod install
 2. open XCode, select device/simulator and run project
 
-**Own Machine's IP Address is needed for API to work in real devices**
+**Own Machine's IP Address is needed for API to work in real devices** <br />
 **Steps to use Own Machine's IP Address instead of localhost**
 1. Go to configuration.js file
     - Path: ~/RN-MDT/src/api/configuration.js 
