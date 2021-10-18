@@ -19,7 +19,7 @@
     - E.g. const CONFIG_IP_LOCAL_HOST = {own machine's IP Address};
 
 **Step to find Macbook's IP Address**
-System Preferences -> Network -> Wi-Fi -> Status -> Will Show the IP Address
+- System Preferences -> Network -> Wi-Fi -> Status -> Will Show the IP Address
 
 **Step to find Windows's IP Address**
 1. Open Command Prompt
