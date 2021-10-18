@@ -1,5 +1,5 @@
 # RN-MDT
-**Installation via Command Line**
+**Installation Steps via Command Line**
 1. cd Desktop
 2. git clone https://github.com/Zack-Fong/RN-MDT.git
 3. cd RN-MDT
@@ -11,6 +11,20 @@
 **Run in iOS Emulator/Device**
 1. cd ios && pod install
 2. open XCode, select deive/simulator and run project
+
+**Steps for API connection via own machine's IP Address**
+1. Go to configuration.js file
+    - Path: ~/RN-MDT/src/api/configuration.js 
+2. Replace CONFIG_IP_LOCAL_HOST with your own machine's IP Address
+    - E.g. const CONFIG_IP_LOCAL_HOST = {own machine's IP Address};
+
+**Step to find Macbook's IP Address**
+System Preferences -> Network -> Wi-Fi -> Status -> Will Show the IP Address
+
+**Step to find Windows's IP Address**
+1. Open Command Prompt
+2. Type **ipconfig/all** and press **Enter**
+3. **IP Address** will be shown as **IPv4 Address**
 
 **Code Structure**
 **1. screens folder**
