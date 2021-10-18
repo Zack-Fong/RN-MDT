@@ -28,8 +28,8 @@ Own Machine's IP Address is needed for API to work in real devices
     2. Type **ipconfig/all** and press **Enter**
     3. **IP Address** will be shown as **IPv4 Address**
 
-**Code Structure**
-\**1. screens folder**
+**Code Structure** <br />
+**1. screens folder**
 - Contains 3 screens:
   1. LoginScreen (Landing Screen)
   2. DashboardScreen
